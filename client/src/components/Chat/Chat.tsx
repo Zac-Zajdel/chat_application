@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 
+import './Chat.css';
+
+import InfoBar from "../InfoBar/InfoBar";
+import Input from "../Input/Input";
+import Messages from "../Messages/Messages";
+
 let socket: SocketIOClient.Socket;
 const ENDPOINT: string = 'localhost:5000';
 
@@ -32,7 +38,7 @@ const Chat = (chat: ChatInterface) => {
    * @desc - Sends message to socket.
    * @param event - The event coming from the enter key.
    */
-  const sendMessage = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const sendMessage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     if(message) {
@@ -54,12 +60,11 @@ const Chat = (chat: ChatInterface) => {
   return (
     <div className="outerContainer">
       <div className="container">
-        <input
-          type="text"
-          value={message}
-          onChange={event => setMessage(event.target.value)}
-          onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
-        />
+        <InfoBar room={chat.room}/>
+
+        <Messages messages={messages} name={chat.name} />
+
+        <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>
   );
