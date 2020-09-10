@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 
 let socket: SocketIOClient.Socket;
+const ENDPOINT: string = 'localhost:5000';
 
 interface ChatInterface {
   name: string,
@@ -9,20 +10,58 @@ interface ChatInterface {
 }
 
 const Chat = (chat: ChatInterface) => {
-  const ENDPOINT: string = 'localhost:5000';
+  const [message, setMessage] = useState<string>('');
+  const [messages, setMessages] = useState<string[]>([]);
 
+  /**
+   * Sets up socket and lets user join room.
+   */
   useEffect(() => {
     socket = io(ENDPOINT);
-    console.log(socket);
 
-    socket.emit('join', { name: chat.name, room: chat.room }, ({ error }: any) => {
-      console.log(error);
+    socket.emit('join', { name: chat.name, room: chat.room }, () => {
     });
 
+    return () => {
+      socket.emit('disconnect');
+      socket.off('test');
+    }
   }, [chat.name, chat.room]);
 
+  /**
+   * @desc - Sends message to socket.
+   * @param event - The event coming from the enter key.
+   */
+  const sendMessage = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    if(message) {
+      socket.emit('sendMessage', message, () => setMessage(''));
+    }
+  }
+
+  /**
+   * @desc - Updates message list with new messages from socket.
+   */
+  useEffect(() => {
+    socket.on('message', (message: string) => {
+      setMessages([...messages, message]);
+    });
+  }, [messages]);
+
+  console.log(message, messages);
+
   return (
-    <h1>Hello {chat.name}! Welcome to { chat.room }</h1>
+    <div className="outerContainer">
+      <div className="container">
+        <input
+          type="text"
+          value={message}
+          onChange={event => setMessage(event.target.value)}
+          onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
+        />
+      </div>
+    </div>
   );
 }
 
