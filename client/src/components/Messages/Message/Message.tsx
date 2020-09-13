@@ -2,6 +2,9 @@ import React from 'react';
 
 import './Message.css';
 
+// @ts-ignore
+import ReactEmoji from 'react-emoji';
+
 interface messageInterface {
   message: any;
   name: string;
@@ -21,13 +24,13 @@ const Message = (singleMessage: messageInterface) => {
       <div className="messageContainer justify-end">
         <p className="sentText pr-10">{ trimmedName }</p>
         <div className="messageBox background-blue">
-          <p className="messageText color-white">{ singleMessage.message.text }</p>
+          <p className="messageText color-white">{ ReactEmoji.emojify(singleMessage.message.text) }</p>
         </div>
       </div>
     ) : (
       <div className="messageContainer justify-start">
         <div className="messageBox background-light">
-          <p className="messageText color-dark">{ singleMessage.message.text }</p>
+          <p className="messageText color-dark">{ ReactEmoji.emojify(singleMessage.message.text) }</p>
         </div>
         <p className="sentText pl-10">{ singleMessage.message.user }</p>
       </div>

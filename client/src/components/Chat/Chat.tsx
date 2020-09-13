@@ -51,10 +51,11 @@ const Chat = (chat: ChatInterface) => {
    */
   useEffect(() => {
     socket.on('message', (message: string) => {
-      setMessages([...messages, message]);
+      setMessages(msgs => [...msgs, message]);
     });
-  }, [messages]);
+  }, []);
 
+  // ! Testing Statement
   console.log(message, messages);
 
   return (
