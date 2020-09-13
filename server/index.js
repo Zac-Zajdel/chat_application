@@ -28,12 +28,13 @@ io.on('connection', (socket) => {
     socket.emit('message', { user: 'admin', text: `${user.name} welcome to the room ${user.room}!` });
 
     // Broadcasts to the channel but not the user that the user has joined the room.
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', payload: `${user.name} has joined.` });
+    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined.` });
 
     // User joins room.
     socket.join(user.room);
-    console.log("User Connected");
 
+    // Obtains all users in the room.
+    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
     callback();
   });
 
@@ -47,6 +48,9 @@ io.on('connection', (socket) => {
     // Send users messsage into the room.
     io.to(user.room).emit('message', { user: user.name, text: message });
 
+    // Have state of which users are in the room.
+    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+
     callback();
   });
 
@@ -56,7 +60,11 @@ io.on('connection', (socket) => {
    * @desc - Allows user to disconnect from the socket.
    */
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    const user = removeUser(socket.id);
+
+    if(user) {
+      io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left the room.`});
+    }
   });
 });
 

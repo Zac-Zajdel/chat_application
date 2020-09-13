@@ -5,7 +5,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 
 import './Messages.css';
 
-import Message from '../Message/Message';
+import Message from './Message/Message';
 
 interface messagesInterface {
   messages: string[];

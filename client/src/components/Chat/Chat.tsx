@@ -30,7 +30,7 @@ const Chat = (chat: ChatInterface) => {
 
     return () => {
       socket.emit('disconnect');
-      socket.off('test');
+      socket.disconnect();
     }
   }, [chat.name, chat.room]);
 
