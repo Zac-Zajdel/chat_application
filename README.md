@@ -1,6 +1,7 @@
 # Chat Application:
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/af06233f26304d8c919ce7e62d0028e6)](https://app.codacy.com/manual/zaczajdel213/chat_application?utm_source=github.com&utm_medium=referral&utm_content=Zac-Zajdel/chat_application&utm_campaign=Badge_Grade_Dashboard)
+[![Known Vulnerabilities](https://snyk.io/test/github/Zac-Zajdel/chat_application/badge.svg?targetFile=server/package.json)](https://snyk.io/test/github/Zac-Zajdel/chat_application?targetFile=server/package.json)
 
 This chat application will allow you and your friends to have conversations via chat rooms but with total customization. Work in progress.
 
