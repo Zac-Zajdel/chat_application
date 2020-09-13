@@ -34,6 +34,3 @@ This chat application will allow you and your friends to have conversations via 
 
 ## License:
 * [MIT](https://choosealicense.com/licenses/mit/)
-
-## Social:
-[![HitCount](http://hits.dwyl.com/Zac-Zajdel/Zac-Zajdel / chat_application.svg)](http://hits.dwyl.com/Zac-Zajdel/Zac-Zajdel / chat_application)
