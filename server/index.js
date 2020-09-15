@@ -1,19 +1,20 @@
 const express = require('express');
 const socketio = require('socket.io');
+const cors = require('cors');
+const mongoose = require('mongoose');
 const http = require('http');
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
+const router = require('./router');
 
 const PORT = process.env.PORT || 5000;
-
-const router = require('./router');
+const DB_CONNECTION = `mongodb+srv://zaczajdel:${process.env.MONGO_ATLAS_PW}@chatapplication.di7bt.mongodb.net/test?authSource=admin&replicaSet=atlas-9wzhgk-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`;
 
 const app = express();
 const server = http.createServer(app);
+
 const io = socketio(server);
-
 io.on('connection', (socket) => {
-
   /**
    * @desc - Allows user to join a room.
    */
@@ -69,4 +70,16 @@ io.on('connection', (socket) => {
 });
 
 app.use(router);
+app.use(cors);
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
+
+/**
+ * @desc - Creates connection to Datbase.
+ */
+mongoose.connect(DB_CONNECTION, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+const connection = mongoose.connection;
+connection.once("open", () => console.log("Connection with MongoDB was successful"))
+  .on('error', error => console.log(`Error connecting to Database: ${error}`));
