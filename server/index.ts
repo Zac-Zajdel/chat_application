@@ -1,4 +1,5 @@
-const express = require('express');
+import express, { Express } from 'express';
+
 const socketio = require('socket.io');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -7,18 +8,18 @@ const http = require('http');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 const router = require('./router');
 
-const PORT = process.env.PORT || 5000;
-const DB_CONNECTION = `mongodb+srv://zaczajdel:${process.env.MONGO_ATLAS_PW}@chatapplication.di7bt.mongodb.net/test?authSource=admin&replicaSet=atlas-9wzhgk-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`;
+const PORT: string | number = process.env.PORT || 5000;
+const DB_CONNECTION: string = `mongodb+srv://zaczajdel:${process.env.MONGO_ATLAS_PW}@chatapplication.di7bt.mongodb.net/test?authSource=admin&replicaSet=atlas-9wzhgk-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`;
 
-const app = express();
+const app: Express = express();
 const server = http.createServer(app);
 
-const io = socketio(server);
-io.on('connection', (socket) => {
+const io: SocketIO.Server = socketio(server);
+io.on('connection', (socket: any): void => {
   /**
    * @desc - Allows user to join a room.
    */
-  socket.on('join', ({ name, room }, callback) => {
+  socket.on('join', ({ name, room }: { name: string, room: string }, callback: any) => {
     const { error, user } = addUser({ id: socket.id, name, room });
 
     if(error) {
@@ -42,7 +43,7 @@ io.on('connection', (socket) => {
   /**
    * @desc - Listens for a user sending message and obtains the users room and emits message to everyone else.
    */
-  socket.on('sendMessage', (message, callback) => {
+  socket.on('sendMessage', (message: string, callback: any) => {
     // Obtains user who sent message.
     const user = getUser(socket.id);
 
@@ -51,11 +52,8 @@ io.on('connection', (socket) => {
 
     // Have state of which users are in the room.
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
-
     callback();
   });
-
-  socket.broadcast.emit("hello World");
 
   /**
    * @desc - Allows user to disconnect from the socket.
@@ -82,4 +80,4 @@ mongoose.connect(DB_CONNECTION, {
 });
 const connection = mongoose.connection;
 connection.once("open", () => console.log("Connection with MongoDB was successful"))
-  .on('error', error => console.log(`Error connecting to Database: ${error}`));
+  .on('error', (error: any) => console.log(`Error connecting to Database: ${error}`));
