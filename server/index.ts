@@ -76,8 +76,8 @@ server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
  */
 mongoose.connect(DB_CONNECTION, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 const connection = mongoose.connection;
-connection.once("open", () => console.log("Connection with MongoDB was successful"))
-  .on('error', (error: any) => console.log(`Error connecting to Database: ${error}`));
+connection.once("open", () => console.log("Connection with MongoDB was successful")).on('error', (error: any) => console.log(`Error connecting to Database: ${error}`));
