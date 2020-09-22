@@ -4,7 +4,8 @@ const userSchema: Schema = new Schema(
   {
     first_name: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     last_name: {
       type: String,
@@ -22,11 +23,13 @@ const userSchema: Schema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      trim: true
     },
     password: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     birthdate: {
       type: Date,
@@ -36,7 +39,8 @@ const userSchema: Schema = new Schema(
       type: String
     },
     address: {
-      type: String
+      type: String,
+      trim: true
     },
     phone: {
       type: String,
