@@ -9,7 +9,7 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 const router = require('./router');
 
 const PORT: string | number = process.env.PORT || 5000;
-const DB_CONNECTION: string = `mongodb+srv://zaczajdel:${process.env.MONGO_ATLAS_PW}@chatapplication.di7bt.mongodb.net/test?authSource=admin&replicaSet=atlas-9wzhgk-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`;
+const DB_CONNECTION: string = `mongodb+srv://zaczajdel:${process.env.MONGO_ATLAS_PW}@chatapplication.di7bt.mongodb.net/chat_application?authSource=admin&replicaSet=atlas-9wzhgk-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`;
 
 const app: Express = express();
 const server = http.createServer(app);
@@ -67,9 +67,9 @@ io.on('connection', (socket: any): void => {
   });
 });
 
-app.use(router);
-app.use(cors);
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
+app.use(cors());
+app.use(router);
 
 /**
  * @desc - Creates connection to Datbase.

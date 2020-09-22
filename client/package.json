@@ -12,6 +12,8 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/socket.io-client": "^1.4.33",
+    "axios": "^0.20.0",
+    "bootstrap": "^5.0.0-alpha1",
     "eslint": "^6.6.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
@@ -44,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0"
   }
 }
