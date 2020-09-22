@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Chat from "../Chat/Chat";
@@ -66,9 +67,7 @@ const Join = () => {
               <button className="button mt-20 mb-3 cursor-pointer" onClick={getUser} type="submit">
                 Sign In
               </button>
-              <span className="text-gray">
-                Create An Account
-              </span>
+              <Link to="/account/create" className="text-gray">Create An Account</Link>
             </div>
           </div>
 
