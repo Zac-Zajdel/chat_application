@@ -16,6 +16,7 @@ const server = http.createServer(app);
 
 const io: SocketIO.Server = socketio(server);
 io.on('connection', (socket: any): void => {
+  
   /**
    * @desc - Allows user to join a room.
    */

@@ -8,7 +8,7 @@ import CreateAccount from './components/Account/CreateAccount';
 
 const App = () => (
   <Router>
-    <Route path="/" exact component={Join} />
+    <Route path="/login" exact component={Join} />
     <Route path="/chat" component={Chat} />
     <Route path="/account/create" component={CreateAccount} />
   </Router>

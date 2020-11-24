@@ -20,7 +20,7 @@ const Chat = (chat: ChatInterface) => {
   const [messages, setMessages] = useState<string[]>([]);
 
   /**
-   * Sets up socket and lets user join room.
+   * @desc - Sets up socket and lets user join room.
    */
   useEffect(() => {
     socket = io(ENDPOINT);
